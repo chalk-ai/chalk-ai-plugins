@@ -1,0 +1,17 @@
+{
+  "name": "chalk-hello",
+  "version": "0.1.0",
+  "description": "Starter Chalk plugin: hello-world skill.",
+  "author": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "license": "UNLICENSED",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Chalk Hello",
+    "shortDescription": "Starter Chalk plugin",
+    "developerName": "Chalk AI",
+    "category": "Productivity"
+  }
+}

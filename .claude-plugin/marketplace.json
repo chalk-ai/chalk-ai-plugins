@@ -1,0 +1,21 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "chalk-ai",
+  "description": "Private Chalk plugin marketplace for Claude Code. Internal use only.",
+  "owner": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "chalk-hello",
+      "source": "./plugins/chalk-hello",
+      "description": "Starter Chalk plugin: a hello-world skill that proves the marketplace works.",
+      "category": "internal",
+      "tags": ["chalk", "starter"]
+    }
+  ]
+}

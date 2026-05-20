@@ -1,0 +1,22 @@
+{
+  "name": "chalk-ai",
+  "interface": {
+    "displayName": "Chalk AI Plugins"
+  },
+  "plugins": [
+    {
+      "name": "chalk-hello",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/chalk-ai/chalk-ai-plugins.git",
+        "path": "./plugins/chalk-hello",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
