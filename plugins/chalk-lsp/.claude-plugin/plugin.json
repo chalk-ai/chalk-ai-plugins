@@ -1,0 +1,11 @@
+{
+  "name": "chalk-lsp",
+  "description": "Runs the chalk-lsp language server against Chalk SDK projects (folders with chalk.yaml at the root).",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "license": "UNLICENSED",
+  "lspServers": "./.lsp.json"
+}

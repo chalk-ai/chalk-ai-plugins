@@ -1,0 +1,11 @@
+{
+  "chalk": {
+    "command": "${CLAUDE_PLUGIN_ROOT}/bin/chalk-lsp.sh",
+    "extensionToLanguage": {
+      ".py": "python"
+    },
+    "transport": "stdio",
+    "restartOnCrash": false,
+    "startupTimeout": 5000
+  }
+}

@@ -16,6 +16,13 @@
       "description": "Starter Chalk plugin: a hello-world skill that proves the marketplace works.",
       "category": "internal",
       "tags": ["chalk", "starter"]
+    },
+    {
+      "name": "chalk-lsp",
+      "source": "./plugins/chalk-lsp",
+      "description": "Runs the chalk-lsp language server against Chalk SDK projects (folders with chalk.yaml).",
+      "category": "internal",
+      "tags": ["chalk", "lsp", "language-server"]
     }
   ]
 }

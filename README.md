@@ -14,14 +14,21 @@ chalk-ai-plugins/
 │   └── plugins/
 │       └── marketplace.json    # Codex marketplace catalog
 └── plugins/
-    └── chalk-hello/            # Example starter plugin
+    ├── chalk-hello/            # Example starter plugin (Claude + Codex)
+    │   ├── .claude-plugin/plugin.json
+    │   ├── .codex-plugin/plugin.json
+    │   └── skills/chalk-hello/SKILL.md
+    └── chalk-lsp/              # chalk-lsp language server (Claude Code only)
         ├── .claude-plugin/plugin.json
-        ├── .codex-plugin/plugin.json
-        └── skills/chalk-hello/SKILL.md
+        ├── .lsp.json
+        ├── bin/chalk-lsp.sh
+        └── README.md
 ```
 
-Each plugin ships both a `.claude-plugin/plugin.json` and a
-`.codex-plugin/plugin.json` so the same source tree works for both runtimes.
+Plugins that work for both runtimes ship both a `.claude-plugin/plugin.json`
+and a `.codex-plugin/plugin.json`. Plugins that only make sense for one
+runtime (e.g. `chalk-lsp`, since Codex does not support LSP servers) ship
+just one manifest and are registered in only the matching marketplace catalog.
 
 ## Install (Claude Code)
 
