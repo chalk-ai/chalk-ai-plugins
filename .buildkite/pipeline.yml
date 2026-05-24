@@ -11,17 +11,7 @@ steps:
     key: validate
     command: |
       set -euo pipefail
-
-      echo "--- :node: Install Node $${NODE_VERSION}"
-      NODE_DIR="$$HOME/node-$${NODE_VERSION}"
-      if [ ! -x "$$NODE_DIR/bin/node" ]; then
-        curl -fsSL "https://nodejs.org/dist/v$${NODE_VERSION}/node-v$${NODE_VERSION}-linux-x64.tar.xz" \
-          | tar -C /tmp -xJf -
-        mv "/tmp/node-v$${NODE_VERSION}-linux-x64" "$$NODE_DIR"
-      fi
-      export PATH="$$NODE_DIR/bin:$$PATH"
-      node --version
-      npm --version
+      source .buildkite/setup-node.sh
 
       echo "--- :package: Install Claude Code CLI"
       npm install -g @anthropic-ai/claude-code
@@ -30,12 +20,22 @@ steps:
       echo "--- :white_check_mark: claude plugin validate ."
       claude plugin validate .
 
-      echo "--- :shell: shellcheck plugins/chalk-lsp/bin/chalk-lsp.sh"
+      echo "--- :shell: shellcheck wrapper + test"
       if ! command -v shellcheck >/dev/null 2>&1; then
-        apt-get update -qq && apt-get install -y -qq shellcheck >/dev/null
+        # Install shellcheck without sudo via a release tarball.
+        SC_VERSION="v0.10.0"
+        SC_DIR="$$HOME/shellcheck-$${SC_VERSION}"
+        if [ ! -x "$$SC_DIR/shellcheck" ]; then
+          curl -fsSL "https://github.com/koalaman/shellcheck/releases/download/$${SC_VERSION}/shellcheck-$${SC_VERSION}.linux.x86_64.tar.xz" \
+            | tar -C /tmp -xJf -
+          rm -rf "$$SC_DIR"
+          mv "/tmp/shellcheck-$${SC_VERSION}" "$$SC_DIR"
+        fi
+        export PATH="$$SC_DIR:$$PATH"
       fi
       shellcheck plugins/chalk-lsp/bin/chalk-lsp.sh
       shellcheck tests/wrapper_test.sh
+      shellcheck .buildkite/setup-node.sh
     agents:
       queue: default
     timeout_in_minutes: 5
@@ -53,20 +53,12 @@ steps:
     key: install-claude
     command: |
       set -euo pipefail
-
-      echo "--- :node: Install Node $${NODE_VERSION}"
-      NODE_DIR="$$HOME/node-$${NODE_VERSION}"
-      if [ ! -x "$$NODE_DIR/bin/node" ]; then
-        curl -fsSL "https://nodejs.org/dist/v$${NODE_VERSION}/node-v$${NODE_VERSION}-linux-x64.tar.xz" \
-          | tar -C /tmp -xJf -
-        mv "/tmp/node-v$${NODE_VERSION}-linux-x64" "$$NODE_DIR"
-      fi
-      export PATH="$$NODE_DIR/bin:$$PATH"
+      source .buildkite/setup-node.sh
 
       echo "--- :package: Install Claude Code CLI"
       npm install -g @anthropic-ai/claude-code
 
-      echo "--- :inbox_tray: Add the local marketplace"
+      echo "--- :inbox_tray: Add local marketplace"
       claude plugin marketplace add "$$PWD"
 
       echo "--- :inbox_tray: Install chalk-hello@chalk-ai"
@@ -75,7 +67,7 @@ steps:
       echo "--- :inbox_tray: Install chalk-lsp@chalk-ai"
       claude plugin install chalk-lsp@chalk-ai
 
-      echo "--- :clipboard: List installed plugins"
+      echo "--- :clipboard: claude plugin list"
       claude plugin list || true
     agents:
       queue: default
@@ -84,31 +76,22 @@ steps:
   - label: ":openai: Install chalk-hello via Codex CLI"
     key: install-codex
     soft_fail:
-      # Codex CLI install path is less stable; surface the failure but don't block.
       - exit_status: "*"
     command: |
       set -euo pipefail
-
-      echo "--- :node: Install Node $${NODE_VERSION}"
-      NODE_DIR="$$HOME/node-$${NODE_VERSION}"
-      if [ ! -x "$$NODE_DIR/bin/node" ]; then
-        curl -fsSL "https://nodejs.org/dist/v$${NODE_VERSION}/node-v$${NODE_VERSION}-linux-x64.tar.xz" \
-          | tar -C /tmp -xJf -
-        mv "/tmp/node-v$${NODE_VERSION}-linux-x64" "$$NODE_DIR"
-      fi
-      export PATH="$$NODE_DIR/bin:$$PATH"
+      source .buildkite/setup-node.sh
 
       echo "--- :package: Install Codex CLI"
       npm install -g @openai/codex
       codex --version
 
-      echo "--- :inbox_tray: Add the local marketplace"
+      echo "--- :inbox_tray: Add local marketplace"
       codex plugin marketplace add "$$PWD"
 
       echo "--- :inbox_tray: Install chalk-hello@chalk-ai"
       codex plugin install chalk-hello@chalk-ai
 
-      echo "--- :clipboard: List installed plugins"
+      echo "--- :clipboard: codex plugin list"
       codex plugin list || true
     agents:
       queue: default
