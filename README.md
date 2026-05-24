@@ -87,3 +87,4 @@ Codex reads `.agents/plugins/marketplace.json` from the repo root.
   `/plugin install <plugin>@chalk-ai`.
 - This repo is private; pushes are visible only to chalk-ai org members.
 <!-- webhook trigger test -->
+<!-- webhook trigger probe v2 -->
