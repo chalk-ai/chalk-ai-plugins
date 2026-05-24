@@ -86,3 +86,4 @@ Codex reads `.agents/plugins/marketplace.json` from the repo root.
 - Marketplace name `chalk-ai` is the public identifier users see when running
   `/plugin install <plugin>@chalk-ai`.
 - This repo is private; pushes are visible only to chalk-ai org members.
+<!-- webhook trigger test -->
