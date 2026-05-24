@@ -1,0 +1,115 @@
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+
+env:
+  NODE_VERSION: "20.18.0"
+
+steps:
+  - label: ":sparkles: Validate marketplace + wrapper script"
+    key: validate
+    command: |
+      set -euo pipefail
+
+      echo "--- :node: Install Node $${NODE_VERSION}"
+      NODE_DIR="$$HOME/node-$${NODE_VERSION}"
+      if [ ! -x "$$NODE_DIR/bin/node" ]; then
+        curl -fsSL "https://nodejs.org/dist/v$${NODE_VERSION}/node-v$${NODE_VERSION}-linux-x64.tar.xz" \
+          | tar -C /tmp -xJf -
+        mv "/tmp/node-v$${NODE_VERSION}-linux-x64" "$$NODE_DIR"
+      fi
+      export PATH="$$NODE_DIR/bin:$$PATH"
+      node --version
+      npm --version
+
+      echo "--- :package: Install Claude Code CLI"
+      npm install -g @anthropic-ai/claude-code
+      claude --version
+
+      echo "--- :white_check_mark: claude plugin validate ."
+      claude plugin validate .
+
+      echo "--- :shell: shellcheck plugins/chalk-lsp/bin/chalk-lsp.sh"
+      if ! command -v shellcheck >/dev/null 2>&1; then
+        apt-get update -qq && apt-get install -y -qq shellcheck >/dev/null
+      fi
+      shellcheck plugins/chalk-lsp/bin/chalk-lsp.sh
+      shellcheck tests/wrapper_test.sh
+    agents:
+      queue: default
+    timeout_in_minutes: 5
+
+  - label: ":mag: chalk-lsp wrapper gating tests"
+    key: wrapper-tests
+    command: |
+      set -euo pipefail
+      bash tests/wrapper_test.sh
+    agents:
+      queue: default
+    timeout_in_minutes: 2
+
+  - label: ":sparkles: Install plugins via Claude Code CLI"
+    key: install-claude
+    command: |
+      set -euo pipefail
+
+      echo "--- :node: Install Node $${NODE_VERSION}"
+      NODE_DIR="$$HOME/node-$${NODE_VERSION}"
+      if [ ! -x "$$NODE_DIR/bin/node" ]; then
+        curl -fsSL "https://nodejs.org/dist/v$${NODE_VERSION}/node-v$${NODE_VERSION}-linux-x64.tar.xz" \
+          | tar -C /tmp -xJf -
+        mv "/tmp/node-v$${NODE_VERSION}-linux-x64" "$$NODE_DIR"
+      fi
+      export PATH="$$NODE_DIR/bin:$$PATH"
+
+      echo "--- :package: Install Claude Code CLI"
+      npm install -g @anthropic-ai/claude-code
+
+      echo "--- :inbox_tray: Add the local marketplace"
+      claude plugin marketplace add "$$PWD"
+
+      echo "--- :inbox_tray: Install chalk-hello@chalk-ai"
+      claude plugin install chalk-hello@chalk-ai
+
+      echo "--- :inbox_tray: Install chalk-lsp@chalk-ai"
+      claude plugin install chalk-lsp@chalk-ai
+
+      echo "--- :clipboard: List installed plugins"
+      claude plugin list || true
+    agents:
+      queue: default
+    timeout_in_minutes: 5
+
+  - label: ":openai: Install chalk-hello via Codex CLI"
+    key: install-codex
+    soft_fail:
+      # Codex CLI install path is less stable; surface the failure but don't block.
+      - exit_status: "*"
+    command: |
+      set -euo pipefail
+
+      echo "--- :node: Install Node $${NODE_VERSION}"
+      NODE_DIR="$$HOME/node-$${NODE_VERSION}"
+      if [ ! -x "$$NODE_DIR/bin/node" ]; then
+        curl -fsSL "https://nodejs.org/dist/v$${NODE_VERSION}/node-v$${NODE_VERSION}-linux-x64.tar.xz" \
+          | tar -C /tmp -xJf -
+        mv "/tmp/node-v$${NODE_VERSION}-linux-x64" "$$NODE_DIR"
+      fi
+      export PATH="$$NODE_DIR/bin:$$PATH"
+
+      echo "--- :package: Install Codex CLI"
+      npm install -g @openai/codex
+      codex --version
+
+      echo "--- :inbox_tray: Add the local marketplace"
+      codex plugin marketplace add "$$PWD"
+
+      echo "--- :inbox_tray: Install chalk-hello@chalk-ai"
+      codex plugin install chalk-hello@chalk-ai
+
+      echo "--- :clipboard: List installed plugins"
+      codex plugin list || true
+    agents:
+      queue: default
+    timeout_in_minutes: 5
