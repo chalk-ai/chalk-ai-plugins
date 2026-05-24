@@ -73,10 +73,8 @@ steps:
       queue: default
     timeout_in_minutes: 5
 
-  - label: ":openai: Install chalk-hello via Codex CLI"
+  - label: ":openai: Verify Codex marketplace parses"
     key: install-codex
-    soft_fail:
-      - exit_status: "*"
     command: |
       set -euo pipefail
       source .buildkite/setup-node.sh
@@ -86,13 +84,16 @@ steps:
       codex --version
 
       echo "--- :inbox_tray: Add local marketplace"
+      # If Codex can read .agents/plugins/marketplace.json without errors,
+      # the catalog is well-formed. This is the install-time validation
+      # available on Codex CLI versions that don't expose `plugin install`.
       codex plugin marketplace add "$$PWD"
 
-      echo "--- :inbox_tray: Install chalk-hello@chalk-ai"
-      codex plugin install chalk-hello@chalk-ai
+      echo "--- :clipboard: codex plugin marketplace list"
+      codex plugin marketplace list
 
       echo "--- :clipboard: codex plugin list"
-      codex plugin list || true
+      codex plugin list
     agents:
       queue: default
     timeout_in_minutes: 5
