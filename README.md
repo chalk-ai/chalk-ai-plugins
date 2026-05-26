@@ -61,6 +61,7 @@ project, add this to that project's `.claude/settings.json`:
 
 ```sh
 codex plugin marketplace add chalk-ai/chalk-ai-plugins
+codex plugin add chalk-hello@chalk-ai
 ```
 
 Codex reads `.agents/plugins/marketplace.json` from the repo root.
