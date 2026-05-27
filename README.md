@@ -30,6 +30,16 @@ and a `.codex-plugin/plugin.json`. Plugins that only make sense for one
 runtime (e.g. `chalk-lsp`, since Codex does not support LSP servers) ship
 just one manifest and are registered in only the matching marketplace catalog.
 
+## Install
+
+Using `gh skill`
+
+```sh
+gh skill install chalk-ai/chalk-ai-plugins
+```
+
+Choose all skills -> Enter -> Choose your coding agents -> Enter -> Installation scope: Global: install in home directory (available everywhere)
+
 ## Install (Claude Code)
 
 ```sh
