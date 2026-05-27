@@ -32,8 +32,6 @@ just one manifest and are registered in only the matching marketplace catalog.
 
 ## Install
 
-Using `gh skill`
-
 ```sh
 gh skill install chalk-ai/chalk-ai-plugins
 ```
