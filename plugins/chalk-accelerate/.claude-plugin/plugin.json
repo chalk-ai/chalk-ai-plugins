@@ -1,0 +1,10 @@
+{
+  "name": "chalk-accelerate",
+  "description": "Checks Chalk Python resolvers against the Chalk static accelerator service and teaches the agent how to rewrite resolvers until they are statically accelerable.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "license": "UNLICENSED"
+}
