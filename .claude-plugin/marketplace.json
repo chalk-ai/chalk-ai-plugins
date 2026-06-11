@@ -23,6 +23,13 @@
       "description": "Runs the chalk-lsp language server against Chalk SDK projects (folders with chalk.yaml).",
       "category": "internal",
       "tags": ["chalk", "lsp", "language-server"]
+    },
+    {
+      "name": "chalk-accelerate",
+      "source": "./plugins/chalk-accelerate",
+      "description": "Checks Chalk Python resolvers against the static accelerator service and teaches the agent to rewrite them until they are statically accelerable.",
+      "category": "internal",
+      "tags": ["chalk", "accelerator", "resolvers", "performance"]
     }
   ]
 }
