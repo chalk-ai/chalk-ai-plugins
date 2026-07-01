@@ -1,0 +1,10 @@
+{
+  "name": "chalk-plan-cache",
+  "description": "Find and debug Chalk query plan cache misses from engine logs using the chalk CLI log search.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "license": "UNLICENSED"
+}
