@@ -31,6 +31,20 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "chalk-plan-cache",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/chalk-ai/chalk-ai-plugins.git",
+        "path": "./plugins/chalk-plan-cache",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ]
 }

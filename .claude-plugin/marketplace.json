@@ -30,6 +30,13 @@
       "description": "Checks Chalk Python resolvers against the static accelerator service and teaches the agent to rewrite them until they are statically accelerable.",
       "category": "internal",
       "tags": ["chalk", "accelerator", "resolvers", "performance"]
+    },
+    {
+      "name": "chalk-plan-cache",
+      "source": "./plugins/chalk-plan-cache",
+      "description": "Find and debug Chalk query plan cache misses from engine logs using the chalk CLI log search.",
+      "category": "internal",
+      "tags": ["chalk", "plan-cache", "logs", "debugging", "performance"]
     }
   ]
 }
