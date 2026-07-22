@@ -88,7 +88,11 @@ Codex reads `.agents/plugins/marketplace.json` from the repo root.
 
    ```sh
    claude plugin validate .
+   node tests/lint_plugins.mjs
    ```
+
+   CI runs both of these plus a real `claude plugin install` of every plugin
+   in the catalog, so a plugin that doesn't install cleanly can't merge.
 
 ## Notes
 

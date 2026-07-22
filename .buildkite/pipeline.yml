@@ -20,6 +20,9 @@ steps:
       echo "--- :white_check_mark: claude plugin validate ."
       claude plugin validate .
 
+      echo "--- :nut_and_bolt: Structural lint (manifests, catalogs, skills)"
+      node tests/lint_plugins.mjs
+
       echo "--- :shell: shellcheck wrapper + test"
       if ! command -v shellcheck >/dev/null 2>&1; then
         # Install shellcheck without sudo via a release tarball.
@@ -61,14 +64,16 @@ steps:
       echo "--- :inbox_tray: Add local marketplace"
       claude plugin marketplace add "$$PWD"
 
-      echo "--- :inbox_tray: Install chalk-hello@chalk-ai"
-      claude plugin install chalk-hello@chalk-ai
-
-      echo "--- :inbox_tray: Install chalk-lsp@chalk-ai"
-      claude plugin install chalk-lsp@chalk-ai
+      # Install every plugin registered in the Claude catalog, so a new
+      # plugin can't merge if it fails to install.
+      node -p "require('./.claude-plugin/marketplace.json').plugins.map(p => p.name).join('\n')" \
+      | while read -r plugin; do
+        echo "--- :inbox_tray: Install $$plugin@chalk-ai"
+        claude plugin install "$$plugin@chalk-ai"
+      done
 
       echo "--- :clipboard: claude plugin list"
-      claude plugin list || true
+      claude plugin list
     agents:
       queue: default
     timeout_in_minutes: 5
