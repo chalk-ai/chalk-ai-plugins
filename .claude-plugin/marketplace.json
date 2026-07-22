@@ -37,6 +37,13 @@
       "description": "Find and debug Chalk query plan cache misses from engine logs using the chalk CLI log search.",
       "category": "internal",
       "tags": ["chalk", "plan-cache", "logs", "debugging", "performance"]
+    },
+    {
+      "name": "chalk-deploy-function",
+      "source": "./plugins/chalk-deploy-function",
+      "description": "Deploy stand-alone python functions to Chalk's container infrastructure with the chalkcompute SDK.",
+      "category": "internal",
+      "tags": ["chalk", "chalkcompute", "functions", "deployment"]
     }
   ]
 }
