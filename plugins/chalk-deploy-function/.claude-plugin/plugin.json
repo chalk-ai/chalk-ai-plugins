@@ -1,0 +1,10 @@
+{
+  "name": "chalk-deploy-function",
+  "description": "Deploy stand-alone python functions to Chalk's container infrastructure with the chalkcompute SDK.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "license": "UNLICENSED"
+}
