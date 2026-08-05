@@ -44,6 +44,13 @@
       "description": "Deploy stand-alone python functions to Chalk's container infrastructure with the chalkcompute SDK.",
       "category": "internal",
       "tags": ["chalk", "chalkcompute", "functions", "deployment"]
+    },
+    {
+      "name": "chalk-benchmark-model",
+      "source": "./plugins/chalk-benchmark-model",
+      "description": "Benchmark throughput and cost-per-token of a model served on vLLM in Chalk's container infrastructure.",
+      "category": "internal",
+      "tags": ["chalk", "vllm", "benchmark", "gpu", "cost"]
     }
   ]
 }
