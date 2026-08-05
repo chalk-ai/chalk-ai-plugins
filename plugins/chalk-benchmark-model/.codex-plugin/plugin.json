@@ -1,0 +1,17 @@
+{
+  "name": "chalk-benchmark-model",
+  "version": "0.1.0",
+  "description": "Benchmark throughput and cost-per-token of a model served on vLLM in Chalk's container infrastructure.",
+  "author": {
+    "name": "Chalk AI",
+    "email": "eng@chalk.ai"
+  },
+  "license": "UNLICENSED",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Chalk Benchmark Model",
+    "shortDescription": "Measure tokens/sec and $/token for a vLLM model",
+    "developerName": "Chalk AI",
+    "category": "Productivity"
+  }
+}
