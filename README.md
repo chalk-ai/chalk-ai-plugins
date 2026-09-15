@@ -13,15 +13,34 @@ chalk-ai-plugins/
 ├── .agents/
 │   └── plugins/
 │       └── marketplace.json    # Codex marketplace catalog
+├── .buildkite/
+│   ├── pipeline.yml            # CI: validate, lint, shellcheck, install-all-plugins
+│   └── setup-node.sh
+├── .github/workflows/
+│   └── sync-buildkite.yml      # Syncs .buildkite/ changes to the Buildkite pipeline
+├── tests/
+│   ├── lint_plugins.mjs        # Structural lint of manifests, catalogs, and skills
+│   └── wrapper_test.sh         # Integration test for the chalk-lsp wrapper
 └── plugins/
+    ├── chalk-accelerate/       # Static-accelerator checks for Python resolvers
+    │   ├── .claude-plugin/plugin.json
+    │   ├── .codex-plugin/plugin.json
+    │   ├── bin/accelerator-diagnostics.py
+    │   ├── skills/accelerate-python-resolvers/SKILL.md
+    │   └── README.md
     ├── chalk-hello/            # Example starter plugin (Claude + Codex)
     │   ├── .claude-plugin/plugin.json
     │   ├── .codex-plugin/plugin.json
     │   └── skills/chalk-hello/SKILL.md
-    └── chalk-lsp/              # chalk-lsp language server (Claude Code only)
+    ├── chalk-lsp/              # chalk-lsp language server (Claude Code only)
+    │   ├── .claude-plugin/plugin.json
+    │   ├── .lsp.json
+    │   ├── bin/chalk-lsp.sh
+    │   └── README.md
+    └── chalk-plan-cache/       # Debug query plan cache misses from engine logs
         ├── .claude-plugin/plugin.json
-        ├── .lsp.json
-        ├── bin/chalk-lsp.sh
+        ├── .codex-plugin/plugin.json
+        ├── skills/debug-plan-cache-misses/SKILL.md
         └── README.md
 ```
 
